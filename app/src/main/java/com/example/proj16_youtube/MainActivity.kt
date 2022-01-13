@@ -3,6 +3,9 @@ package com.example.proj16_youtube
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.example.proj16_youtube.adapter.VideoAdapter
 import com.example.proj16_youtube.dto.VideoDto
 import com.example.proj16_youtube.service.VideoService
 import retrofit2.Call
@@ -13,7 +16,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class MainActivity : AppCompatActivity() {
 
-
+    private lateinit var videoAdapter: VideoAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,6 +25,17 @@ class MainActivity : AppCompatActivity() {
         supportFragmentManager.beginTransaction()
             .replace(R.id.fragmentContainer, PlayerFragment())
             .commit()
+
+        videoAdapter = VideoAdapter(callback ={url, title ->
+            supportFragmentManager.fragments.find{it is PlayerFragment}?.let{
+                (it as PlayerFragment).play(url, title)
+            }
+        })
+
+        findViewById<RecyclerView>(R.id.mainRecyclerView).apply {
+            adapter = videoAdapter
+            layoutManager = LinearLayoutManager(context)
+        }
 
         getVideoList()
     }
@@ -32,25 +46,22 @@ class MainActivity : AppCompatActivity() {
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 
-        retrofit.create(VideoService::class.java).also{
+        retrofit.create(VideoService::class.java).also {
 
             it.listVideos()
-                .enqueue(object: Callback<VideoDto>{
+                .enqueue(object : Callback<VideoDto> {
                     override fun onResponse(call: Call<VideoDto>, response: Response<VideoDto>) {
-                       if(response.isSuccessful.not()){
-                           Log.d("MainActivity", "response fail")
-                           return
-                       }
+                        if (response.isSuccessful.not()) {
+                            Log.d("MainActivity", "response fail")
+                            return
+                        }
 
-                        response.body()?.let{
-                            Log.d("MainActivity", it.toString())
+                        response.body()?.let { videoDto ->
+                            videoAdapter.submitList(videoDto.videos)
                         }
                     }
 
-                    override fun onFailure(call: Call<VideoDto>, t: Throwable) {
-                        TODO("Not yet implemented")
-                    }
-
+                    override fun onFailure(call: Call<VideoDto>, t: Throwable) {}
                 })
         }
     }

@@ -3,8 +3,12 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Android_Clone_Coding/Proj16_Youtube/app/src/main/res/drawable/ic_baseline_pause_24.xml" value="0.1638888888888889" />
+        <entry key="..\:/Android_Clone_Coding/Proj16_Youtube/app/src/main/res/drawable/ic_baseline_play_arrow_24.xml" value="0.1638888888888889" />
+        <entry key="..\:/Android_Clone_Coding/Proj16_Youtube/app/src/main/res/drawable/shape_circle.xml" value="0.21302083333333333" />
         <entry key="..\:/Android_Clone_Coding/Proj16_Youtube/app/src/main/res/layout/activity_main.xml" value="0.2759493670886076" />
-        <entry key="..\:/Android_Clone_Coding/Proj16_Youtube/app/src/main/res/layout/fragment_player.xml" value="0.22" />
+        <entry key="..\:/Android_Clone_Coding/Proj16_Youtube/app/src/main/res/layout/fragment_player.xml" value="0.1" />
+        <entry key="..\:/Android_Clone_Coding/Proj16_Youtube/app/src/main/res/layout/item_video.xml" value="0.196875" />
         <entry key="..\:/Android_Clone_Coding/Proj16_Youtube/app/src/main/res/menu/bottom_nav_menu.xml" value="0.36614583333333334" />
       </map>
     </option>
